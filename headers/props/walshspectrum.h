@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../bv.h"
-#include "../vect/iterproxy.h"
+#include "bv.h"
+#include "vect/iterproxy.h"
 
 #include <vector>
 #include <cstdint>

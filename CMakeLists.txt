@@ -40,6 +40,7 @@ set(HEADERS
 		headers/formula/parsedcalculator.h
 		headers/integer/rational.h
 		headers/props/walshspectrum.h
+		headers/props/ddt.h
 )
 
 set(LIBSOURCES
@@ -59,6 +60,7 @@ set(LIBSOURCES
 		sources/formula/lexem.cpp
 		sources/formula/parsedformula.cpp
 		sources/props/walshspectrum.cpp
+		sources/props/ddt.cpp
 )
 
 add_library(bf STATIC ${HEADERS} ${LIBSOURCES})
@@ -84,6 +86,9 @@ target_link_libraries(walshtest PRIVATE bf)
 add_executable(cryptotest tests/cryptotest.cpp)
 target_link_libraries(cryptotest PRIVATE bf)
 
+add_executable(vcryptotest tests/vcryptotest.cpp)
+target_link_libraries(vcryptotest PRIVATE bf)
+
 add_test(BooleanOperationTest booloptest)
 add_test(ChunkVectorTest chunkvectortest)
 add_test(AnfTest anftest)
@@ -91,3 +96,4 @@ add_test(GF2Test gf2test)
 add_test(FPolynomialTest fpolynomialtest)
 add_test(WalshTest walshtest)
 add_test(CryptoPropertiesTest cryptotest)
+add_test(VectorialCryptoPropertiesTest vcryptotest)

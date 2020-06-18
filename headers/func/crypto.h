@@ -2,6 +2,8 @@
 
 #include "func/bf.h"
 #include "func/anf.h"
+#include "func/vbf.h"
+#include "func/vanf.h"
 #include "props/walshspectrum.h"
 
 namespace bf
@@ -25,5 +27,15 @@ namespace bf
     bool sac(const BF& f);
 
     bv8 pc(const BF& f);
+
+    int32_t degree(const VBF& f);
+
+    bv32 nonlinearity(const VBF& f);
+
+    bv8 componentAi(const VBF& f);
+
+    uint64_t uniformity(const VBF& f);
+
+    bool uniformity(const VBF& f, uint64_t upToDelta);
   }
 }

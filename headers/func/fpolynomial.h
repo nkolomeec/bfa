@@ -31,12 +31,38 @@ namespace bf
 
     bool setFormula(std::string formula);
 
-    std::shared_ptr<const GF2> field() const
+    inline std::shared_ptr<const GF2> field() const
     {
       return _field;
     }
 
-    bv8 polynomialVars() const
+    bv32 value(bv32 x) const
+    {
+      auto result = BV32(0);
+      auto part = max32(_field->n());
+
+      for (auto pow : dom())
+      {
+        auto prod = get(pow);
+
+        for (auto i = BV8(0); i < _nPolynomialVars; ++i)
+        {
+          auto currX = (x >> (i * _field->n())) & part;
+          auto currPow = (pow >> (i * _field->n())) & part;
+
+          if (!zero(currPow))
+          {
+            prod = _field->mult(prod, _field->pow(currX, currPow));
+          }
+        }
+
+        result ^= prod;
+      }
+
+      return result;
+    }
+
+    inline bv8 polynomialVars() const
     {
       return _nPolynomialVars;
     }

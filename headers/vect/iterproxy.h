@@ -62,6 +62,12 @@ namespace bf
       return _maximum;
     }
 
+    inline IterProxy& skipFirst()
+    {
+      ++(*this);
+      return *this;
+    }
+
   private:
     T _current;
     T _maximum;
