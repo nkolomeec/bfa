@@ -250,6 +250,7 @@ namespace lexem
     Lexem(uint64_t pos)
       :
       type(Type::None),
+      error('\0'),
       position(pos)
     {
     }
