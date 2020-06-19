@@ -26,7 +26,7 @@ namespace bf
     return result->check() ? result : nullptr;
   }
   
-  std::shared_ptr<const GF2> GF2Factory::createDefault(bv8 n)
+  std::shared_ptr<const GF2> GF2Factory::createDefault(int n)
   {
     if (n < 1 || n > 32)
     {
@@ -76,7 +76,7 @@ namespace bf
     return result;
   }
   
-  std::shared_ptr<const GF2> GF2Factory::createMappedDefault(bv8 n)
+  std::shared_ptr<const GF2> GF2Factory::createMappedDefault(int n)
   {
     if (n < 1 || n > 32)
     {

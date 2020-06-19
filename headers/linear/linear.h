@@ -7,7 +7,7 @@
 namespace bf
 {
   template<typename T>
-  bv8 rank(const T *elements, bv64 count)
+  int rank(const T *elements, bv64 count)
   {
     std::vector<T> matrix(count);
 
@@ -44,6 +44,6 @@ namespace bf
       }
     }
 
-    return (bv8)count;
+    return (int)count;
   }
 }

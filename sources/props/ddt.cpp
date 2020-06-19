@@ -6,8 +6,8 @@ namespace bf
 {
   DDT::DDT(const VBF& f)
     :
-    _n(f.n()),
-    _m(f.m()),
+    _n((bv8)f.n()),
+    _m((bv8)f.m()),
     _ddt(basis64(f.n() + f.m()))
   {
     _ddt[0] = sizeValues();

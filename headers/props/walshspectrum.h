@@ -16,7 +16,7 @@ namespace bf
     WalshSpectrum()
       :
       _walsh(1, -1),
-      _n(0)
+      _n((bv8)0)
     {
     }
 
@@ -49,9 +49,9 @@ namespace bf
 
     uint32_t nonlinearity() const;
 
-    bv8 ci() const;
+    int ci() const;
 
-    bv8 resilency() const;
+    int resilency() const;
 
     bool balanced() const;
 
@@ -60,7 +60,7 @@ namespace bf
       return !bf::get(_n, 0) && radius() == basis64(_n >> 1);
     }
 
-    bv8 n()
+    int n()
     {
       return _n;
     }
@@ -71,7 +71,7 @@ namespace bf
     }
 
   private:
-    static void MultiplyHn(std::vector<int64_t> &data, bv8 n);
+    static void MultiplyHn(std::vector<int64_t> &data, int n);
 
   private:
     bv8 _n;

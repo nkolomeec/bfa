@@ -14,7 +14,7 @@ namespace bf
   public:
     inline Anf() = default;
 
-    inline Anf(bv8 n)
+    inline Anf(int n)
       :
       BFBase(n)
     {
@@ -42,11 +42,11 @@ namespace bf
     Anf(const BF&);
 
   public:
-    int32_t deg() const;
+    int deg() const;
 
-    Anf minAnnihilator(bv8 upToDegree) const;
+    Anf minAnnihilator(unsigned int upToDegree) const;
 
-    inline void resize(bv8 n)
+    inline void resize(int n)
     {
       BFBase::resize(n, false);
     }

@@ -113,7 +113,7 @@ namespace
       return stream;
     }
 
-    if (bf::size(ovect) <= read.length)
+    if (read.length < 0 || bf::size(ovect) <= read.length)
     {
       read._value = ovect;
     }
@@ -130,8 +130,8 @@ namespace
   {
     auto value = write._value;
     
-    int i = write.length == 255 
-      ? (int)bf::lead(value) 
+    int i = write.length < 0 
+      ? bf::size1(value) - 1 
       : (int)std::min<bf::bv8>(write.length, (bf::bv8)(sizeof(T) * 8)) - 1;
 
     for (; i >= 0; --i)

@@ -47,12 +47,12 @@ namespace bf
       return basis64(_m);
     }
 
-    inline bv8 n() const
+    inline int n() const
     {
       return _n;
     }
 
-    inline bv8 m() const
+    inline int m() const
     {
       return _m;
     }

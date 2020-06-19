@@ -16,7 +16,7 @@ namespace bf
   public:
     inline VAnf() = default;
 
-    inline VAnf(bv8 n, bv8 m)
+    inline VAnf(int n, int m)
       :
       VBFBase(n, m)
     {
@@ -40,18 +40,18 @@ namespace bf
 
     std::ostream& write(std::ostream &stream, bool is0bCoefficients, const char *variableSymbol, unsigned int startVar, const char *startIdx, const char *endIdx, const char *multiplySymbol, const char *sumSymbol) const;
 
-    inline bool coordinate(bv8 i, bv32 x) const
+    inline bool coordinate(int i, bv32 x) const
     {
-      assert(i < m());
+      assert(i >= 0 && i < m());
 
       return bf::get(get(x), i);
     }
 
-    inline Anf coordinate(bv8 i) const
+    inline Anf coordinate(int i) const
     {
-      assert(i < m());
+      assert(i >= 0 && i < m());
 
-      Anf result((bv8)n());
+      Anf result(n());
 
       for (auto x : result.dom())
       {
@@ -63,7 +63,7 @@ namespace bf
 
     inline Anf component(bv32 comp) const
     {
-      Anf result((bv8)n());
+      Anf result(n());
 
       for (auto x : result.dom())
       {
@@ -74,7 +74,7 @@ namespace bf
     }
 
   public:
-    int32_t deg() const;
+    int deg() const;
   };
 
   std::ostream& operator<<(std::ostream& stream, const VAnf &anf);

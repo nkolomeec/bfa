@@ -8,7 +8,7 @@ namespace bf
   class GF2 
   {
   public:
-    inline bv32 n() const noexcept
+    inline int n() const noexcept
     {
       return bf::lead(Polynomial);
     }

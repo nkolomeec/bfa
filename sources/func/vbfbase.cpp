@@ -6,7 +6,7 @@ namespace bf
   {
     std::vector<BFBase> result(m());
 
-    for (auto i : irange(m()))
+    for (auto i = 0; i < m(); ++i)
     {
       result[i] = BFBase(n());
     }
@@ -15,7 +15,7 @@ namespace bf
     {
       auto val = get(x);
 
-      for (auto i : irange(m()))
+      for (auto i = 0; i < m(); ++i)
       {
         result[i].set(x, bf::get(val, i));
       }

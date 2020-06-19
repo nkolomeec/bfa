@@ -18,28 +18,28 @@ namespace bf
   public:
     inline VBFBase()
       :
-      VBFBase(BV8(0), BV8(1))
+      VBFBase(0, 1)
     {
     }
 
-    inline VBFBase(bv8 n, bv8 m)
+    inline VBFBase(int n, int m)
       :
-      _n(n),
-      _m(m),
+      _n((bv8)n),
+      _m((bv8)m),
       _values(m * bf::basis64(n))
     {
-      assert(_n <= 32);
-      assert(_m > 0 && _m <= 32);
+      assert(n >= 0 && n <= 32);
+      assert(m > 0 && m <= 32);
     }
 
     // general functions 
   public:
-    inline bv32 n() const noexcept
+    inline int n() const noexcept
     {
       return _n;
     }
 
-    inline bv32 m() const noexcept
+    inline int m() const noexcept
     {
       return _m;
     }

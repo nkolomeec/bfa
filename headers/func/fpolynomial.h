@@ -19,15 +19,15 @@ namespace bf
   public:
     inline FPolynomial() = delete;
 
-    inline explicit FPolynomial(const std::shared_ptr<const GF2> &gf2, bv8 nPolynomialVars = 0)
+    inline explicit FPolynomial(const std::shared_ptr<const GF2> &gf2, int nPolynomialVars = 0)
       :
       VBFBase(nPolynomialVars * gf2->n(), gf2->n()),
-      _nPolynomialVars(nPolynomialVars),
+      _nPolynomialVars((bv8)nPolynomialVars),
       _field(gf2)
     {
     }
 
-    FPolynomial(std::shared_ptr<const GF2> gf2, bv8 nPolynomialVars, const VBF &f);
+    FPolynomial(std::shared_ptr<const GF2> gf2, int nPolynomialVars, const VBF &f);
 
     bool setFormula(std::string formula);
 
@@ -62,7 +62,7 @@ namespace bf
       return result;
     }
 
-    inline bv8 polynomialVars() const
+    inline int polynomialVars() const
     {
       return _nPolynomialVars;
     }

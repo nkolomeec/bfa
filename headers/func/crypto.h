@@ -14,11 +14,11 @@ namespace bf
     
     bv32 nonlinearity(const BF& f);
     
-    bv32 gac(const BF& f);
+    bv64 gac(const BF& f);
     
-    bv8 ci(const BF& f);
+    int ci(const BF& f);
     
-    bv8 resilency(const BF& f);
+    int resilency(const BF& f);
 
     Anf ai(const BF& f);
 
@@ -26,13 +26,13 @@ namespace bf
 
     bool sac(const BF& f);
 
-    bv8 pc(const BF& f);
+    int pc(const BF& f);
 
-    int32_t degree(const VBF& f);
+    int degree(const VBF& f);
 
-    bv32 nonlinearity(const VBF& f);
+    uint32_t nonlinearity(const VBF& f);
 
-    bv8 componentAi(const VBF& f);
+    int componentAi(const VBF& f);
 
     uint64_t uniformity(const VBF& f);
 

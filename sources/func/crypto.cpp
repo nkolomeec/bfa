@@ -43,7 +43,7 @@ namespace bf
 {
   namespace crypto
   {
-    int32_t degree(const BF& f)
+    int degree(const BF& f)
     {
       return Anf(f).deg();
     }
@@ -53,9 +53,9 @@ namespace bf
       return WalshSpectrum(f).nonlinearity();
     }
 
-    bv32 gac(const BF& f)
+    bv64 gac(const BF& f)
     {
-      if (bf::zero(f.n()))
+      if (f.n() == 0)
       {
         return BV32(1);
       }
@@ -73,15 +73,15 @@ namespace bf
         }
       }
 
-      return (bv32)gacValue;
+      return gacValue;
     }
 
-    bv8 ci(const BF& f)
+    int ci(const BF& f)
     {
       return WalshSpectrum(f).ci();
     }
 
-    bv8 resilency(const BF& f)
+    int resilency(const BF& f)
     {
       return WalshSpectrum(f).resilency();
     }
@@ -129,7 +129,7 @@ namespace bf
 
     bool sac(const BF& f)
     {
-      if (bf::zero(f.n()))
+      if (f.n() == 0)
       {
         return false;
       }
@@ -145,11 +145,11 @@ namespace bf
       return true;
     }
 
-    bv8 pc(const BF& f)
+    int pc(const BF& f)
     {
       auto autocorrelation = WalshSpectrum(f).autocorrelation();
 
-      bv8 pcValue = f.n();
+      auto pcValue = f.n();
 
       for (bv64 i = 1; i < autocorrelation.size(); ++i)
       {
@@ -161,7 +161,7 @@ namespace bf
           {
             pcValue = w - 1;
 
-            if (zero(pcValue))
+            if (pcValue == 0)
             {
               return pcValue;
             }
@@ -172,7 +172,7 @@ namespace bf
       return pcValue;
     }
 
-    int32_t degree(const VBF& f)
+    int degree(const VBF& f)
     {
       return VAnf(f).deg();
     }
@@ -194,7 +194,7 @@ namespace bf
       return nonlin;
     }
 
-    bv8 componentAi(const VBF& f)
+    int componentAi(const VBF& f)
     {
       VAnf vanf(f);
 

@@ -16,6 +16,7 @@ namespace bf
   typedef uint32_t bv32;
   typedef uint64_t bv64;
 
+  /*
   constexpr std::array<bv64, 2>  _minAndMax = { BV64(0), BV64(0xFFFFFFFFFFFFFFFF) };
 
   constexpr std::array<bv64, 65> _max = {
@@ -49,7 +50,7 @@ namespace bf
     BV64(0xFFFFFFFFFFFFFFFF), BV64(0xFFFFFFFFFFFFFFFF), BV64(0xFFFFFFFFFFFFFFFF), BV64(0xFFFFFFFFFFFFFFFF),
     BV64(0xFFFFFFFFFFFFFFFF), BV64(0xFFFFFFFFFFFFFFFF), BV64(0xFFFFFFFFFFFFFFFF), BV64(0xFFFFFFFFFFFFFFFF)
   };
-
+  */
   const std::array<bv8, 256> _weightTable = {
     0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4,
     1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,

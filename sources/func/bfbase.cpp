@@ -14,17 +14,17 @@ namespace
 
 namespace bf 
 {
-  void BFBase::resize(bv8 n, bool copy)
+  void BFBase::resize(int n, bool copy)
   {
     _values.resize(basis64(n));
 
     if (n <= _n || !copy)
     {
-      _n = n;
+      _n = (bv8)n;
       return;
     }
 
-    for (; _n < BV8(6) && _n < n; ++_n)
+    for (; _n < 6 && _n < n; ++_n)
     {
       _values[0] ^= _values[0] << basis8(_n);
     }

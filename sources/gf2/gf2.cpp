@@ -47,7 +47,7 @@ namespace bf
       auto n = this->n();
       bv32 result = a;
 
-      for (bv32 i = 1; i < n; ++i)
+      for (auto i = 1; i < n; ++i)
       {
         a = mult(a, a);
         result ^= a;

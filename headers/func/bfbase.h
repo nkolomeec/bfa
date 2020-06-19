@@ -12,26 +12,27 @@ namespace bf
     bv8 _n;
 
   protected:
-    void resize(bv8 n, bool copy);
+    void resize(int n, bool copy);
 
     // constructors
   public:
     inline BFBase()
     :
-      BFBase(BV8(0))
+      BFBase(0)
     {
     }
 
-    inline BFBase(bv8 n)
+    inline BFBase(int n)
       :
-      _n(n),
+      _n((bv8)n),
       _values(bf::basis64(n))
     {
+      assert(n >= 0 && n <= 32);
     }
 
     // general functions 
   public:
-    inline bv8 n() const noexcept
+    inline int n() const noexcept
     {
       return _n;
     }
@@ -71,7 +72,7 @@ namespace bf
     {
       _values.set(val);
 
-      _values[0] &= (bv64)((static_cast<bv64>(_n < BV8(6)) << (basis64(_n) & BV64(63))) - 1);
+      _values[0] &= (bv64)((static_cast<bv64>(_n < 6) << (basis64(_n) & BV64(63))) - 1);
     }
 
   public:

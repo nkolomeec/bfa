@@ -12,7 +12,7 @@ namespace bf
   template<typename T>
   struct bv_io
   {    
-    bv_io(T &value, bv8 length)
+    bv_io(T &value, int length)
       :
       _value(value),
       length(length),
@@ -20,7 +20,7 @@ namespace bf
     {
     }
 
-    bv_io(const T &&value, bv8 length)
+    bv_io(const T &&value, int length)
       :
       _constant(value),
       _value(_constant),
@@ -30,54 +30,54 @@ namespace bf
    
     void operator=(const bv_io&) = delete;
 
-    const bv8 length;
+    const int length;
     T& _value;
 
   private:
     T _constant;
   };
 
-  inline bv_io<bv8> bv(bv8 &vect, bv8 length = 255)
+  inline bv_io<bv8> bv(bv8 &vect, int length = -1)
   {
     return bv_io<bv8>(vect, length);
   }
 
-  inline bv_io<bv32> bv(bv32 &vect, bv8 length = 255)
+  inline bv_io<bv32> bv(bv32 &vect, int length = -1)
   {
     return bv_io<bv32>(vect, length);
   }
 
-  inline bv_io<bv64> bv(bv64 &vect, bv8 length = 255)
+  inline bv_io<bv64> bv(bv64 &vect, int length = -1)
   {
     return bv_io<bv64>(vect, length);
   }
 
-  inline const bv_io<bv8> bv(const bv8 &vect, bv8 length = 255)
+  inline const bv_io<bv8> bv(const bv8 &vect, int length = -1)
   {
     return bv_io<bv8>((bv8)vect, length);
   }
 
-  inline const bv_io<bv32> bv(const bv32 &vect, bv8 length = 255)
+  inline const bv_io<bv32> bv(const bv32 &vect, int length = -1)
   {
     return bv_io<bv32>((bv32)vect, length);
   }
 
-  inline const bv_io<bv64> bv(const bv64 &vect, bv8 length = 255)
+  inline const bv_io<bv64> bv(const bv64 &vect, int length = -1)
   {
     return bv_io<bv64>((bv64)vect, length);
   }
 
-  inline const bv_io<bv8> bv(const int8_t &vect, bv8 length = 255)
+  inline const bv_io<bv8> bv(const int8_t &vect, int length = -1)
   {
     return bv_io<bv8>((bv8)vect, length);
   }
 
-  inline const bv_io<bv32> bv(const int32_t &vect, bv8 length = 255)
+  inline const bv_io<bv32> bv(const int32_t &vect, int length = -1)
   {
     return bv_io<bv32>((bv32)vect, length);
   }
 
-  inline const bv_io<bv64> bv(const int64_t &vect, bv8 length = 255)
+  inline const bv_io<bv64> bv(const int64_t &vect, int length = -1)
   {
     return bv_io<bv64>((bv64)vect, length);
   }

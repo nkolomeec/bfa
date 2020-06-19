@@ -16,7 +16,7 @@ namespace bf
   public:
     inline VBF() = default;
 
-    inline VBF(bv8 n, bv8 m)
+    inline VBF(int n, int m)
       :
       VBFBase(n, m)
     {
@@ -80,9 +80,9 @@ namespace bf
       return bf::get(get(x), i);
     }
 
-    inline BF coordinate(bv8 i) const
+    inline BF coordinate(int i) const
     {
-      assert(i < m());
+      assert(i >= 0 && i < m());
 
       BF result(n());
 
@@ -96,9 +96,7 @@ namespace bf
 
     IterProxy<bv32> components() const
     {
-      auto all = brange(_m);
-      ++all;
-      return all;
+      return brange(_m).skipFirst();
     }
   };
 }

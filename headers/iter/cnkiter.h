@@ -34,7 +34,7 @@ namespace bf
       start();
     }
 
-    bv32 operator[](bv32 i) const
+    bv32 operator[](int64_t i) const
     {
       return _values[i];
     }

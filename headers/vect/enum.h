@@ -23,21 +23,22 @@ namespace bf
   }
 
   // zero vector is always zero-length vector
-  inline IterProxy<bv32> brange(bv8 length)
+  inline IterProxy<bv32> brange(int length)
   {
-    assert(length <= 32);
+    assert(0 <= length && length <= 32);
+    
     return IterProxy<bv32>(BV32(1) << length, false);
   }
 
-  inline IterProxy<bv8> brange8(bv8 length)
+  inline IterProxy<bv8> brange8(int length)
   {
-    assert(length <= 8);
-    return IterProxy<bv8>(BV8(1) << length, false);
+    assert(length >= 0 && length <= 8);
+    return IterProxy<bv8>((bv8)(1 << length), false);
   }
 
-  inline IterProxy<bv64> brange64(bv8 length)
+  inline IterProxy<bv64> brange64(int length)
   {
-    assert(length <= 64);
+    assert(length >= 0 && length <= 64);
     return IterProxy<bv64>(BV64(1) << length, false);
   }
 
@@ -54,15 +55,5 @@ namespace bf
   inline IterMaskProxy<bv8> bmaskrange(bv8 mask, bool skipZero = false)
   {
     return IterMaskProxy<bv8>(mask, skipZero);
-  }
-
-  inline IterProxy<bv8> irange(bv8 nbNumbers, bv8 start = BV8(0))
-  {
-    return IterProxy<bv8>(start, start + nbNumbers - BV8(1), nbNumbers == 0);
-  }
-
-  inline IterRevProxy<bv8> irangerev(bv8 nbNumbers, bv8 end = BV8(0))
-  {
-    return IterRevProxy<bv8>(end, end + nbNumbers - BV8(1), nbNumbers == 0);
   }
 }

@@ -40,7 +40,7 @@ namespace
 
     virtual bf::VBF convertConstant(bf::bv64 a)
     {
-      bf::VBF result(nVariables, std::max(bf::size(maxConstant), BV8(1)));
+      bf::VBF result(nVariables, bf::size1(maxConstant));
       
       result.set((bf::bv32)a);
 
@@ -49,7 +49,7 @@ namespace
 
     virtual bf::VBF convertVariable(unsigned int globalId)
     {
-      bf::VBF result(nVariables, std::max(bf::size(maxConstant), BV8(1)));
+      bf::VBF result(nVariables, bf::size1(maxConstant));
 
       auto val = bf::max32(result.m());
 
@@ -74,9 +74,9 @@ namespace bf
   {
   }
 
-  int32_t VAnf::deg() const
+  int VAnf::deg() const
   {
-    int32_t deg = -1;
+    int deg = -1;
     for (auto x : dom())
     {
       if (!bf::zero(get(x)))
@@ -147,7 +147,7 @@ namespace bf
               stream << val;
             }
 
-          for (bv32 k = 0; k < i; ++k)
+          for (auto k = 0; k < i; ++k)
           {
             stream << variableSymbol << startIdx << j[k] + startVar << endIdx;
           }

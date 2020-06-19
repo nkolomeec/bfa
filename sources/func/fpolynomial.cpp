@@ -174,7 +174,7 @@ namespace bf
     return true;
   }
 
-  FPolynomial::FPolynomial(std::shared_ptr<const GF2> gf2, bv8 nPolynomialVars, const VBF &f)
+  FPolynomial::FPolynomial(std::shared_ptr<const GF2> gf2, int nPolynomialVars, const VBF &f)
     :
     FPolynomial(gf2, nPolynomialVars)
   {
@@ -215,24 +215,6 @@ namespace bf
       }
 
       set(i, sum);
-
-      /*
-      if (zero(i))
-      {
-        set(BV32(0), f.get(BV32(0)));
-        continue;
-      }
-
-      bv32 result = BV32(0);
-      bv32 degmax = (bv32)bf::max32(_field->n());
-
-      for (auto x : f.dom())
-      {
-        result ^= _field->mult(i < degmax ? _field->pow(x, degmax - i) : BV32(1), f.get(x));
-      }
-
-      set(i, result);
-      */
     }   
   }
 

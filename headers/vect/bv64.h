@@ -8,76 +8,108 @@
 
 namespace bf
 {
-  inline bv64 max64(bv8 n)
+  inline bv64 max64(int n)
   {
-    assert(n <= 64);
+    assert(n >= 0 && n <= 64);
+
     return ~((BV64(0xFFFFFFFFFFFFFFFF) << (n & BV64(63))) & (static_cast<bv64>(n >> 6) - 1));
   }
 
-  inline bv64 basis64(bv8 i)
+  inline bv64 basis64(int i)
   {
-    assert(i < 64);
+    assert(i >= 0 && i < 64);
+    
     return (BV64(1) << i);
   }
 
-  inline bv8 lead(bv64 vect)
+  inline bool zero(bv64 vect)
   {
-    bv8 result = BV8(0);
-
-    bv64 tmp = vect >> 32;
-    if (tmp != 0) { vect = tmp; result += BV8(32); }
-
-    return result + lead(static_cast<bv32>(vect));
+    return vect == BV64(0);
   }
 
-  inline bv8 size(bv64 vect)
+  inline int lead(bv64 vect)
+  {
+    if (zero(vect))
+    {
+      return -1;
+    }
+
+    auto result = 0;
+
+    bv64 tmp = vect >> 32;
+    if (tmp != 0) { vect = tmp; result += 32; }
+
+    tmp = vect >> 16;
+    if (tmp != 0) { vect = tmp; result += 16; }
+
+    tmp = vect >> 8;
+    if (tmp != 0) { vect = tmp; result += 8; }
+
+    tmp = vect >> 4;
+    if (tmp != 0) { vect = tmp; result += 4; }
+
+    tmp = vect >> 2;
+    if (tmp != 0) { vect = tmp; result += 2; }
+
+    tmp = vect >> 1;
+    if (tmp != 0) { result += 1; }
+
+    return result;
+  }
+
+  inline int size(bv64 vect)
   {
     return lead(vect) + 1;
   }
 
-  inline bv8 weight(bv64 vect)
+  inline int size1(bv64 vect)
+  {
+    return std::max(size(vect), 1);
+  }
+
+  inline int weight(bv64 vect)
   {
     return weight(static_cast<bv32>(vect)) + weight(static_cast<bv32>(vect >> 32));
   }
 
-  inline bool odd(bv64 vect)
+  inline bool get(bv64 vect, int idx)
   {
-    return odd(static_cast<bv32>(vect ^ (vect >> 32)));
-  }
+    assert(idx >= 0 && idx < 64);
 
-  inline bool get(bv64 vect, bv8 idx)
-  {
-    assert(idx < 64);
     return (bool)((vect >> idx) & BV64(1));
   }
 
-  inline void set0(bv64 &vect, bv8 idx)
+  inline void set0(bv64 &vect, int idx)
   {
-    assert(idx < 64);
+    assert(idx >= 0 && idx < 64);
+
     vect &= ~(BV64(1) << idx);
   }
 
-  inline void set1(bv64 &vect, bv8 idx)
+  inline void set1(bv64 &vect, int idx)
   {
-    assert(idx < 64);
+    assert(idx >= 0 && idx < 64);
+
     vect |= (BV64(1) << idx);
   }
 
-  inline void set(bv64 &vect, bv8 idx, bool val)
+  inline void set(bv64 &vect, int idx, bool val)
   {
-    assert(idx < 64);
+    assert(idx >= 0 && idx < 64);
+
     vect ^= (vect & (BV64(1) << idx)) ^ (static_cast<bv64>(val) << idx);
   }
 
-  inline void invert(bv64 &vect, bv8 idx)
+  inline void invert(bv64 &vect, int idx)
   {
-    assert(idx < 64);
+    assert(idx >= 0 && idx < 64);
+
     vect ^= (BV64(1) << idx);
   }
 
-  inline bv64 inversion(bv64 vect, bv8 len)
+  inline bv64 inversion(bv64 vect, int len)
   {
-    assert(len < 64);
+    assert(len >= 0 && len < 64);
     return ~vect & max64(len);
   }
 
@@ -89,6 +121,18 @@ namespace bf
   inline void add(bv64 &vect, bv64 vect2)
   {
     vect ^= vect2;
+  }
+
+  inline bool odd(bv64 vect)
+  {
+    vect ^= vect >> 32;
+    vect ^= vect >> 16;
+    vect ^= vect >> 8;
+    vect ^= vect >> 4;
+    vect ^= vect >> 2;
+    vect ^= vect >> 1;
+
+    return get(vect, 0);
   }
 
   inline bool product(bv64 vect1, bv64 vect2)
@@ -114,8 +158,8 @@ namespace bf
     return (vect & mask) == vect;
   }
 
-  inline bool zero(bv64 vect)
+  inline bool weight1(bv64 vect)
   {
-    return vect == BV64(0);
+    return !zero(vect) && zero(vect & (vect - 1));
   }
 }

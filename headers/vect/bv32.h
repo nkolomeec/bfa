@@ -4,93 +4,110 @@
 
 #include "bfa.h"
 #include "vect/bvdata.h"
-#include "vect/bv8.h"
 
 namespace bf
 {
-  inline bv32 max32(bv8 n)
+  inline bv32 max32(int n)
   {
-    assert(n <= 32);
+    assert(n >= 0 && n <= 32);
     return static_cast<bv32>(~(UINT64_C(0xFFFFFFFF) << n));
   }
 
-  inline bv32 basis32(bv8 i)
+  inline bv32 basis32(int i)
   {
-    assert(i < 32);
+    assert(i >= 0 && i < 32);
     return (BV32(1) << i);
   }
 
-  inline bv8 lead(bv32 vect)
+  inline bool zero(bv32 vect)
   {
-    bv8 result = BV8(0);
-    
-    bv32 tmp = vect >> 16;
-    if (tmp != 0) { vect = tmp; result += BV8(16); }
-
-    tmp = vect >> 8;
-    if (tmp != 0) { vect = tmp; result += BV8(8); }
-
-    return result + lead(static_cast<bv8>(vect));
+    return vect == BV32(0);
   }
 
-  inline bv8 size(bv32 vect)
+  inline int lead(bv32 vect)
+  {
+    if (zero(vect))
+    {
+      return -1;
+    }
+
+    auto result = 0;
+
+    auto tmp = vect >> 16;
+    if (tmp != 0) { vect = tmp; result += 16; }
+
+    tmp = vect >> 8;
+    if (tmp != 0) { vect = tmp; result += 8; }
+
+    tmp = vect >> 4;
+    if (tmp != 0) { vect = tmp; result += 4; }
+
+    tmp = vect >> 2;
+    if (tmp != 0) { vect = tmp; result += 2; }
+
+    tmp = vect >> 1;
+    if (tmp != 0) { result += 1; }
+
+    return result;
+  }
+
+  inline int size(bv32 vect)
   {
     return lead(vect) + 1;
   }
 
-  inline bv8 weight(bv32 vect)
+  inline int size1(bv32 vect)
   {
-    return _weightTable[BV8(0xFF) & vect] +
-      _weightTable[BV8(0xFF) & (vect >> 8)] +
-      _weightTable[BV8(0xFF) & (vect >> 16)] +
-      _weightTable[BV8(0xFF) & (vect >> 24)];
+    return std::max(size(vect), 1);
   }
 
-  inline bool odd(bv32 vect)
+  inline int weight(bv32 vect)
   {
-    vect ^= vect >> 16;
-    vect ^= vect >> 8;
-    vect ^= vect >> 4;
-    vect ^= vect >> 2;
-    vect ^= vect >> 1;
-
-    return (vect & BV32(1)) != 0;
+    return _weightTable[BV32(0xFF) & vect] +
+      _weightTable[BV32(0xFF) & (vect >> 8)] +
+      _weightTable[BV32(0xFF) & (vect >> 16)] +
+      _weightTable[BV32(0xFF) & (vect >> 24)];
   }
 
-  inline bool get(bv32 vect, bv8 idx)
+  inline bool get(bv32 vect, int idx)
   {
-    assert(idx < 32);
+    assert(idx >= 0 && idx < 32);
+
     return (bool)((vect >> idx) & BV32(1));
   }
 
-
-  inline void set0(bv32 &vect, bv8 idx)
+  inline void set0(bv32 &vect, int idx)
   {
-    assert(idx < 32);
+    assert(idx >= 0 && idx < 32);
+
     vect &= ~(BV32(1) << idx);
   }
 
-  inline void set1(bv32 &vect, bv8 idx)
+  inline void set1(bv32 &vect, int idx)
   {
-    assert(idx < 32);
+    assert(idx >= 0 && idx < 32);
+
     vect |= (BV32(1) << idx);
   }
 
-  inline void set(bv32 &vect, bv8 idx, bool val)
+  inline void set(bv32 &vect, int idx, bool val)
   {
-    assert(idx < 32);
+    assert(idx >= 0 && idx < 32);
+
     vect ^= (vect & (BV32(1) << idx)) ^ (static_cast<bv32>(val) << idx);
   }
 
-  inline void invert(bv32 &vect, bv8 idx)
+  inline void invert(bv32 &vect, int idx)
   {
-    assert(idx < 32);
+    assert(idx >= 0 && idx < 32);
+
     vect ^= (BV32(1) << idx);
   }
 
-  inline bv32 inversion(bv32 vect, bv8 len)
+  inline bv32 inversion(bv32 vect, int len)
   {
-    assert(len < 32);
+    assert(len >= 0 && len <= 32);
+
     return ~vect & max32(len);
   }
 
@@ -103,6 +120,17 @@ namespace bf
   {
     vect ^= vect2;
   }
+
+  inline bool odd(bv32 vect)
+  {
+    vect ^= vect >> 16;
+    vect ^= vect >> 8;
+    vect ^= vect >> 4;
+    vect ^= vect >> 2;
+    vect ^= vect >> 1;
+
+    return get(vect, 0);
+  } 
 
   inline bool product(bv32 vect1, bv32 vect2)
   {
@@ -128,8 +156,8 @@ namespace bf
     return (vect & mask) == vect;
   }
 
-  inline bool zero(bv32 vect)
+  inline bool weight1(bv32 vect)
   {
-    return vect == BV32(0);
+    return !zero(vect) && zero(vect & (vect - 1));
   }
 }

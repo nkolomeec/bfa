@@ -10,7 +10,7 @@ namespace bf
   WalshSpectrum::WalshSpectrum(const BF &f)
     :
     _walsh(bf::basis64(f.n())),
-    _n(f.n())
+    _n((bv8)f.n())
   {
     for (auto x : f.dom())
     {
@@ -105,9 +105,9 @@ namespace bf
     return (uint32_t)(basis64(_n - 1) - (radius() >> 1));
   }
 
-  bv8 WalshSpectrum::ci() const
+  int WalshSpectrum::ci() const
   {
-    bv8 immunity = _n;
+    int immunity = _n;
 
     for (bv64 i = 1; i < size(); ++i)
     {
@@ -119,7 +119,7 @@ namespace bf
         {
           immunity = w - 1;
 
-          if (zero(immunity))
+          if (immunity == 0)
           {
             return immunity;
           }
@@ -130,11 +130,11 @@ namespace bf
     return immunity;
   }
 
-  bv8 WalshSpectrum::resilency() const
+  int WalshSpectrum::resilency() const
   {
     if (!balanced())
     {
-      return BV8(0);
+      return 0;
     }
 
     return ci();
@@ -145,7 +145,7 @@ namespace bf
     return _walsh[0] == 0;
   }
 
-  void WalshSpectrum::MultiplyHn(std::vector<int64_t> &data, bv8 n)
+  void WalshSpectrum::MultiplyHn(std::vector<int64_t> &data, int n)
   {
     auto size = bf::basis64(n);
 

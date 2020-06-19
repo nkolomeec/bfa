@@ -69,9 +69,9 @@ namespace bf
   {
   }
 
-  int32_t Anf::deg() const
+  int Anf::deg() const
   {
-    int32_t deg = -1;
+    int deg = -1;
     for (auto x : dom())
     {
       if (get(x))
@@ -105,7 +105,7 @@ namespace bf
         {
           if (nMonoms > 0)
             stream << sumSymbol;
-          for (bv32 k = 0; k < i; ++k) 
+          for (auto k = 0; k < i; ++k) 
           {
             stream << variableSymbol << startIdx << cnk[k] + startVar << endIdx;
           }
@@ -156,7 +156,7 @@ namespace bf
     return true;
   }
 
-  Anf Anf::minAnnihilator(bv8 upToDegree) const
+  Anf Anf::minAnnihilator(unsigned int upToDegree) const
   {
     std::vector<bv32> varsByNumber;
     std::vector<ChunkVector> system(size());

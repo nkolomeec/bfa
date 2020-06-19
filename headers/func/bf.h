@@ -15,7 +15,7 @@ namespace bf
   public:
     inline BF() = default;
 
-    inline BF(bv8 n)
+    inline BF(int n)
       :
       BFBase(n)
     {
@@ -53,7 +53,7 @@ namespace bf
       return *this;
     }
 
-    inline void resize(bv8 n)
+    inline void resize(int n)
     {
       BFBase::resize(n, true);
     }
