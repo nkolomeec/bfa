@@ -1,5 +1,3 @@
-#pragma once
-
 #include "func/bf.h"
 #include "props/walshspectrum.h"
 #include "vect/bvio.h"

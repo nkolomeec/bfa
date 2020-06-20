@@ -1,5 +1,3 @@
-#pragma once
-
 #include "props/ddt.h"
 
 namespace bf
