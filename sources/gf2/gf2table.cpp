@@ -102,7 +102,7 @@ namespace bf
 
       if (_primary == BV32(0)) 
       {
-        throw new std::exception("Operation or Polynom is failed");
+        throw 1;
       }
 
       _trcoeff = 0;
