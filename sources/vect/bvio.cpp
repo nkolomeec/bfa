@@ -159,6 +159,21 @@ namespace bf
     return OperatorRead(stream, read);
   }
 
+  std::istream& operator>>(std::istream& stream, bv_io<bv8>&& read)
+  {
+    return OperatorRead(stream, read);
+  }
+
+  std::istream& operator>>(std::istream& stream, bv_io<bv32>&& read)
+  {
+    return OperatorRead(stream, read);
+  }
+
+  std::istream& operator>>(std::istream& stream, bv_io<bv64>&& read)
+  {
+    return OperatorRead(stream, read);
+  }
+
   std::ostream& operator<<(std::ostream &stream, const bv_io<bv8> &write)
   {
     return OperatorWrite(stream, write);

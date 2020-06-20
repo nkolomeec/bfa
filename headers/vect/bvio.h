@@ -85,6 +85,10 @@ namespace bf
   std::istream& operator>>(std::istream &stream, bv_io<bv8> &read);
   std::istream& operator>>(std::istream &stream, bv_io<bv32> &read);
   std::istream& operator>>(std::istream &stream, bv_io<bv64> &read);
+  
+  std::istream& operator>>(std::istream& stream, bv_io<bv8>&& read);
+  std::istream& operator>>(std::istream& stream, bv_io<bv32>&& read);
+  std::istream& operator>>(std::istream& stream, bv_io<bv64>&& read);
 
   std::ostream& operator<<(std::ostream &stream, const bv_io<bv8> &write);
   std::ostream& operator<<(std::ostream &stream, const bv_io<bv32> &write);
