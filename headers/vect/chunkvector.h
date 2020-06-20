@@ -2,6 +2,8 @@
 
 #include "bv.h"
 
+#include <cstring>
+
 namespace bf
 {
   // Represent binary "chunk" vector (64 bit chunk size)

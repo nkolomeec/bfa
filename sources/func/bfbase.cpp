@@ -1,5 +1,7 @@
 #include "func/bfbase.h"
 
+#include <cstring>
+
 namespace
 {
   constexpr std::array<bf::bv64, 6> MobiusTemplates = {
