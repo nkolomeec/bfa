@@ -1,5 +1,5 @@
 #include "vect/bvio.h"
-#include "vect/enum.h"
+#include "vect/domain.h"
 #include "linear/gjmatrix.h"
 
 namespace

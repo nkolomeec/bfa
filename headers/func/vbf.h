@@ -94,9 +94,9 @@ namespace bf
       return result;
     }
 
-    IterProxy<bv32> components() const
+    Domain<bv32> components() const
     {
-      return brange(_m).skipFirst();
+      return Domain<bv32>(m()).skip();
     }
   };
 }

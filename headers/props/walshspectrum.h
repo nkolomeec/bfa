@@ -1,7 +1,7 @@
 #pragma once
 
 #include "bv.h"
-#include "vect/iterproxy.h"
+#include "vect/domain.h"
 
 #include <vector>
 #include <cstdint>
@@ -65,9 +65,9 @@ namespace bf
       return _n;
     }
 
-    IterProxy<bv32> dom() const
+    Domain<bv32> dom() const
     {
-      return brange(_n);
+      return Domain<bv32>(_n);
     }
 
   private:

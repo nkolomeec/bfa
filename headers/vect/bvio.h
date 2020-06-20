@@ -109,7 +109,7 @@ namespace bf
 
     auto flags = stream.flags();
 
-    stream.setf(flag, std::ios_base::basefield);
+    stream.setf((std::ios_base::fmtflags)flag, std::ios_base::basefield);
 
     bf::bv64 vect;
 

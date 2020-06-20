@@ -48,9 +48,9 @@ namespace bf
       return basis64(_n);
     }
 
-    inline IterProxy<bv32> dom() const noexcept
+    inline Domain<bv32> dom() const noexcept
     {
-      return brange(_n);
+      return Domain<bv32>(_n);
     }
 
     inline bv32 get(bv32 x) const noexcept

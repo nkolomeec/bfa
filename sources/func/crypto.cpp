@@ -11,7 +11,7 @@ namespace
 
     uint64_t max = 0U;
 
-    for (auto a : f.dom().skipFirst())
+    for (auto a : f.dom().skip())
     {
       for (auto& x : b)
       {

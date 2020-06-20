@@ -5,7 +5,7 @@
 #include "gf2/gf2table.h"
 #include "gf2/gf2factory.h"
 #include "vect/bvio.h"
-#include "vect/enum.h"
+#include "vect/domain.h"
 
 #include <sstream>
 #include <vector>

@@ -2,7 +2,7 @@
 
 #include "bv.h"
 #include "func/vbf.h"
-#include "vect/iterproxy.h"
+#include "vect/domain.h"
 
 #include <vector>
 
@@ -57,14 +57,14 @@ namespace bf
       return _m;
     }
 
-    inline IterProxy<bv32> domDelta() const
+    inline Domain<bv32> domDelta() const
     {
-      return brange(_n).skipFirst();
+      return Domain<bv32>(n()).skip();
     }
 
-    inline IterProxy<bv32> domValues() const
+    inline Domain<bv32> domValues() const
     {
-      return brange(_m);
+      return Domain<bv32>(m());
     }
 
     inline bool operator==(const DDT& ddt) const

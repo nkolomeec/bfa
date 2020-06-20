@@ -1,5 +1,4 @@
 #include "vect/bvio.h"
-#include "vect/enum.h"
 
 #include <cctype>
 

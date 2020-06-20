@@ -14,11 +14,9 @@ set(HEADERS
         headers/vect/bv32.h
         headers/vect/bv64.h
         headers/vect/bvdata.h
-        headers/vect/enum.h
         headers/vect/bvio.h
-        headers/vect/itermaskproxy.h
-        headers/vect/iterproxy.h
-        headers/vect/iterrevproxy.h
+        headers/vect/domain.h
+        headers/vect/domainmask.h
         headers/vect/chunkvector.h
 		headers/iter/cnkiter.h
 		headers/func/bfbase.h
@@ -44,7 +42,7 @@ set(HEADERS
 )
 
 set(LIBSOURCES
-        sources/bvio.cpp
+        sources/vect/bvio.cpp
 		sources/func/bfbase.cpp
 		sources/func/bf.cpp
 		sources/func/anf.cpp
