@@ -98,8 +98,9 @@ namespace bf
     auto i = n();
     uint64_t nMonoms = 0;
 
-    while (i > 0) {
-      for (auto cnk : CnkIter(n(), i))
+    while (i > 0) 
+    {
+      for (auto cnk = CnkIter(n(), i); cnk; ++cnk)
       {
         if (get(cnk.first32())) 
         {
@@ -178,7 +179,7 @@ namespace bf
     // ordering monomials to get function of minimal degree as a first solution
     for (auto k = upToDegree; !zero(k); --k)
     {
-      for (auto cnk : CnkIter(n(), k))
+      for (auto cnk = CnkIter(n(), k); cnk; ++cnk)
       {
         auto current = cnk.first32();
 

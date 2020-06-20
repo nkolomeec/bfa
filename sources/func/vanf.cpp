@@ -130,7 +130,7 @@ namespace bf
     auto max = bf::max32(m());
 
     while (i > 0) {
-      for (auto j : CnkIter(n(), i)) 
+      for (auto j = CnkIter(n(), i); j; ++j)
       {
         auto val = get(j.first32());
         if (val != 0)

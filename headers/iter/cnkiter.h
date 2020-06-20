@@ -14,11 +14,6 @@ namespace bf
     bv32 _k;
     bool _isEnd;
 
-    struct CnkEndState
-    {
-
-    };
-
   private:
     CnkIter() = delete;
 
@@ -31,7 +26,7 @@ namespace bf
       _values(k),
       _isEnd(true)
     {
-      start();
+      begin();
     }
 
     bv32 operator[](int64_t i) const
@@ -56,28 +51,29 @@ namespace bf
       return result;
     }
 
-    inline const CnkIter& operator*()
+  // "virtual" iterator functions
+  public: 
+    CnkIter& begin()
     {
+      if (_k > _n)
+      {
+        return *this;
+      }
+
+      for (bv32 i = 0; i < _k; ++i) {
+        _values[i] = i;
+      }
+
+      _isEnd = false;
+
       return *this;
     }
 
-    inline CnkIter& begin()
+    explicit operator bool() const
     {
-      start();
-
-      return *this;
+      return !_isEnd;
     }
-
-    inline CnkEndState end()
-    {
-      return CnkEndState();
-    }
-
-    inline bool operator!=(const CnkEndState)
-    {
-      return !this->_isEnd;
-    }
-
+    
     void operator++()
     {
       if (_k == 0)
@@ -108,21 +104,6 @@ namespace bf
         _isEnd = true;
       }
     }
-
-  private:
-    void start()
-    {
-      if (_k > _n)
-      {
-        return;
-      }
-      
-      for (bv32 i = 0; i < _k; ++i) {
-        _values[i] = i;
-      }
-      
-      _isEnd = false;
-    }  
   };
 }
 
