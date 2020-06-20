@@ -1,5 +1,3 @@
-#pragma once
-
 #include "bv.h"
 #include "gf2/gf2factory.h"
 #include "gf2/gf2table.h"
