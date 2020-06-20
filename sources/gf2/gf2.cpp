@@ -1,5 +1,3 @@
-#pragma once
-
 #include "gf2/gf2.h"
 #include "gf2/bpolynomials.h"
 #include "linear/linear.h"
