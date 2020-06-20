@@ -1,5 +1,3 @@
-#pragma once
-
 #include "gf2/gf2table.h"
 
 namespace bf
