@@ -139,7 +139,7 @@ namespace
 
 namespace bf 
 {
-  bool FPolynomial::setFormula(std::string formula)
+  std::shared_ptr<const GF2> FPolynomial::setFormula(std::string formula, std::shared_ptr<const GF2> defaultField, VBF& f, unsigned int& nPolyVars)
   {
     std::istringstream sstream(formula);
 
@@ -147,29 +147,54 @@ namespace bf
 
     if (!parsed.isOk() || !sstream.eof())
     {
-      return false;
+      return nullptr;
     }
 
-    auto field = parsed.endWithSpecial ? GF2Factory::createMapped(parsed.specialConstant, false) : _field;
+    auto field = parsed.endWithSpecial ? GF2Factory::createMapped(parsed.specialConstant, false) : defaultField;
 
     if ((int)field->n() * parsed.nVariables > 32)
     {
-      return false;
+      return nullptr;
     }
 
     if (field == nullptr)
     {
-      return false;
+      return nullptr;
     }
 
     FPolynomialParsedCalculator calc(parsed, field);
 
     if (!calc.calculate())
     {
+      return nullptr;
+    }
+
+    f = calc.value;
+    nPolyVars = parsed.nVariables;
+
+    return field;
+  }
+
+  bool FPolynomial::setFormula(std::string formula, std::shared_ptr<const GF2> defaultField, VBF& f)
+  {
+    unsigned int n;
+
+    return setFormula(formula, defaultField, f, n) != nullptr;
+  }
+
+  bool FPolynomial::setFormula(std::string formula)
+  {
+    unsigned int nPolyVars;
+    VBF f;
+
+    auto field = setFormula(formula, _field, f, nPolyVars);
+    
+    if (!field)
+    {
       return false;
     }
 
-    *this = FPolynomial(field, (bv8)parsed.nVariables, calc.value);
+    *this = FPolynomial(field, nPolyVars, f);
 
     return true;
   }

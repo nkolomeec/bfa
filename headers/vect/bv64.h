@@ -162,4 +162,16 @@ namespace bf
   {
     return !zero(vect) && zero(vect & (vect - 1));
   }
+  
+  inline bv64 leastOne(bv64 vect)
+  {
+    return vect & (bv64)(-(int64_t)vect);
+  }
+
+  inline int bitToInt(bv64 vectorOfWeight1)
+  {
+    assert(weight1(vectorOfWeight1));
+
+    return trailingZeros(vectorOfWeight1);
+  }
 }

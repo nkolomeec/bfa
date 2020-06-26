@@ -18,6 +18,8 @@ set(HEADERS
         headers/vect/domain.h
         headers/vect/domainmask.h
         headers/vect/chunkvector.h
+		headers/vect/graysequence.h
+		headers/vect/linearcombinations.h
 		headers/iter/cnkiter.h
 		headers/func/bfbase.h
 		headers/func/bf.h
@@ -39,6 +41,9 @@ set(HEADERS
 		headers/integer/rational.h
 		headers/props/walshspectrum.h
 		headers/props/ddt.h
+		headers/props/subspacebfiter.h
+		headers/props/utils/cosetstack.h
+		headers/props/utils/sortingmap.h
 )
 
 set(LIBSOURCES
@@ -59,6 +64,7 @@ set(LIBSOURCES
 		sources/formula/parsedformula.cpp
 		sources/props/walshspectrum.cpp
 		sources/props/ddt.cpp
+		sources/props/subspacebfiter.cpp
 )
 
 add_library(bf STATIC ${HEADERS} ${LIBSOURCES})
@@ -87,6 +93,9 @@ target_link_libraries(cryptotest PRIVATE bf)
 add_executable(vcryptotest tests/vcryptotest.cpp)
 target_link_libraries(vcryptotest PRIVATE bf)
 
+add_executable(subspacestes tests/subspacestest.cpp)
+target_link_libraries(subspacestes PRIVATE bf)
+
 add_test(BooleanOperationTest booloptest)
 add_test(ChunkVectorTest chunkvectortest)
 add_test(AnfTest anftest)
@@ -95,3 +104,4 @@ add_test(FPolynomialTest fpolynomialtest)
 add_test(WalshTest walshtest)
 add_test(CryptoPropertiesTest cryptotest)
 add_test(VectorialCryptoPropertiesTest vcryptotest)
+add_test(SubspacesTest vcryptotest)

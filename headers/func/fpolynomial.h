@@ -29,6 +29,8 @@ namespace bf
 
     FPolynomial(std::shared_ptr<const GF2> gf2, int nPolynomialVars, const VBF &f);
 
+    static bool setFormula(std::string formula, std::shared_ptr<const GF2> defaultField, VBF& f);
+
     bool setFormula(std::string formula);
 
     inline std::shared_ptr<const GF2> field() const
@@ -66,6 +68,9 @@ namespace bf
     {
       return _nPolynomialVars;
     }
+
+  private:
+    static std::shared_ptr<const GF2> setFormula(std::string formula, std::shared_ptr<const GF2> defaultField, VBF& f, unsigned int &nPolyVars);
   };
 
   std::ostream& operator<<(std::ostream& stream, const FPolynomial &poly);

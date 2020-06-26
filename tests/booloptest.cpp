@@ -2,12 +2,13 @@
 #include "vect/domain.h"
 #include "vect/domainmask.h"
 #include "vect/bvio.h"
+#include "vect/linearcombinations.h"
 
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
-
+#include <chrono>
 
 unsigned int counter;
 
@@ -190,6 +191,65 @@ bool CheckSize(const T& x)
   return w == sz;
 }
 
+bool CheckDeBruijn()
+{
+  for (auto i = 0; i < 64; ++i)
+  {
+    auto j = bf::trailingZeros(bf::basis64(i));
+
+    if (i != j)
+    {
+      return false;
+    }
+  }
+
+  return bf::trailingZeros(0) == 0;
+}
+
+bool CheckLinearCombinations(int n, bool skipZero)
+{
+  std::vector<bf::bv64> basis(n);
+  std::vector<bf::bv64> check(bf::basis64(n));
+
+  for (auto i = 0; i < n; ++i)
+  {
+    basis[i] = bf::max64(n - i);
+  }
+
+  bf::bv64 start = BV64(0xABCDEF);
+
+  for (auto& comb : bf::LinearCombinations<bf::bv64>(start, basis.data(), n, skipZero))
+  {
+    auto &a = comb.combination();
+    check[a^start]++;
+
+    auto coords = comb.coordinates();
+
+    auto c = start;
+    for (auto i = 0; i < 64; ++i)
+    {
+      if (bf::get(coords, i))
+      {
+        c ^= basis[i];
+      }
+    }
+
+    if (a != c)
+    {
+      return false;
+    }
+  }
+
+  for (int i = skipZero; i < check.size(); ++i)
+  {
+    if (check[i] != 1)
+    {
+      return false;
+    }
+  }
+
+  return true;
+}
 
 int main()
 {
@@ -251,6 +311,17 @@ int main()
     CHECK(CheckMask(mask));
     CHECK(CheckMask(static_cast<bf::bv64>(mask)));
   }
+
+  CHECK(CheckDeBruijn());
+
+  CHECK(CheckLinearCombinations(0, true));
+  CHECK(CheckLinearCombinations(0, false));
+
+  CHECK(CheckLinearCombinations(5, true));
+  CHECK(CheckLinearCombinations(5, false));
+
+  CHECK(CheckLinearCombinations(9, true));
+  CHECK(CheckLinearCombinations(9, false));
 
   std::cout << counter << " successful" << std::endl;
   
