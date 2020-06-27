@@ -1,5 +1,3 @@
-#pragma once
-
 #include "bv.h"
 #include "func/bf.h"
 #include "props/subspacebfiter.h"
