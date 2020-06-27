@@ -246,15 +246,12 @@ namespace lexem
 
     int64_t position;
 
-    union
-    {
-      ErrorLexem error;
-      ConstantLexem constant;
-      VariableLexem variable;
-      BracketLexem bracket;
-      OperationLexem operation;
-      SpecialLexem special;
-    };
+    ErrorLexem error;
+    ConstantLexem constant;
+    VariableLexem variable;
+    BracketLexem bracket;
+    OperationLexem operation;
+    SpecialLexem special;
 
     Lexem()
       :
