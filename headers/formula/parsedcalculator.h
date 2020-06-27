@@ -41,6 +41,11 @@ namespace lexem
       return false;
     }
 
+    virtual bool convertSpecialConstant(T& a, int constantId)
+    {
+      return false;
+    }
+
     virtual T convertConstant(bf::bv64 a) = 0;
 
     virtual T convertVariable(unsigned int globalId) = 0;
@@ -62,7 +67,21 @@ namespace lexem
             }
             else
             {
-              stack.push(convertConstant(l.constant.constant));
+              if (l.constant.special())
+              {
+                T elem;
+
+                if (!convertSpecialConstant(elem, l.constant.constantId))
+                {
+                  return false;
+                }
+
+                stack.push(elem);
+              }
+              else
+              {
+                stack.push(convertConstant(l.constant.constant));
+              }
             }
           }
 
@@ -200,7 +219,7 @@ namespace lexem
           mult(stack.top(), b);
           break;
         case lexem::OperationLexem::Type::Div:
-          if (div(stack.top(), b))
+          if (!div(stack.top(), b))
           {
             error = "division is failed";
             return false;

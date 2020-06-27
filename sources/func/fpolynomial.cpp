@@ -109,6 +109,27 @@ namespace
       return true;
     }
 
+    virtual bool convertSpecialConstant(bf::VBF& a, int constantId)
+    {
+      if (constantId != BV8(0))
+      {
+        return false;
+      }
+
+      a =  bf::VBF(field->n() * nVariables, field->n());
+
+      auto alpha = field->generator();
+
+      // generator element
+      for (auto x : a.dom())
+      {
+        a.set(x, alpha);
+      }
+
+      return true;
+    }
+
+
     virtual bf::VBF convertConstant(bf::bv64 a)
     {
       bf::VBF result((bf::bv8)(field->n() * nVariables), field->n());
@@ -143,7 +164,7 @@ namespace bf
   {
     std::istringstream sstream(formula);
 
-    auto parsed = lexem::ParseFormula(sstream, { "tr" });
+    auto parsed = lexem::ParseFormula(sstream, { "tr" }, { "gen" });
 
     if (!parsed.isOk() || !sstream.eof())
     {

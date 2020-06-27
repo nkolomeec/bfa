@@ -30,14 +30,29 @@ namespace lexem
   struct ConstantLexem
   {
     bf::bv64 constant;
+    int constantId;
 
     bool isRational;
 
-    ConstantLexem(bf::bv64 constant)
+    ConstantLexem(bf::bv64 constant, bool special = false)
     {
-      this->constant = constant;
+      if (special)
+      {
+        this->constant = BV64(0);
+        this->constantId = (int)constant;
+      }
+      else
+      {
+        this->constant = constant;
+        this->constantId = -1;
+      }
+      
       isRational = false;
+    }
 
+    bool special() const
+    {
+      return constantId >= 0;
     }
 
     void info()
@@ -389,6 +404,6 @@ namespace lexem
     }
   };
 
-  Lexem NextLexem(std::istream &stream, const Lexem &previousLexem, const std::vector<std::string> &functions);
+  Lexem NextLexem(std::istream &stream, const Lexem &previousLexem, const std::vector<std::string> &functions, const std::vector<std::string>& constants);
 }
 

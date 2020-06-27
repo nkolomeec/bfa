@@ -140,6 +140,6 @@ namespace lexem
     void createError(const Lexem& lexem, const char *msg);
   };
 
-  ParsedFormula ParseFormula(std::istream &stream, const std::vector<std::string> &functions, char delimiter = '\0');
+  ParsedFormula ParseFormula(std::istream &stream, const std::vector<std::string> &functions, const std::vector<std::string>& constants, char delimiter = '\0');
 }
 

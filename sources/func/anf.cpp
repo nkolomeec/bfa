@@ -133,7 +133,7 @@ namespace bf
   {
     std::istringstream sstream(formula);
 
-    auto parsed = lexem::ParseFormula(sstream, {});
+    auto parsed = lexem::ParseFormula(sstream, {}, {});
 
     if (!parsed.isOk() || !sstream.eof())
     {

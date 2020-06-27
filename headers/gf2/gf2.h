@@ -28,6 +28,8 @@ namespace bf
   
     virtual bool check() const;
 
+    virtual bv32 generator() const;
+
     bv32 mod(bv64 a) const noexcept;
 
   public:

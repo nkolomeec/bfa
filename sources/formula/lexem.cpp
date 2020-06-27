@@ -19,9 +19,9 @@ namespace lexem
     return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
   }
 
-  Lexem NextLexem(std::istream &stream, const Lexem &previous, const std::vector<std::string> &functions)
+  Lexem NextLexem(std::istream &stream, const Lexem &previous, const std::vector<std::string> &functions, const std::vector<std::string>& constants)
   {
-    if (previous.isConstant())
+    if (previous.isConstant() && !previous.constant.special())
     {
       if (isDigit(stream.peek()))
       {
@@ -77,6 +77,14 @@ namespace lexem
         while (isLetter(stream.peek()))
         {
           name.append({ (char)std::tolower(stream.get())});
+        }
+
+        for (size_t i = 0; i < constants.size(); ++i)
+        {
+          if (name == constants[i])
+          {
+            return Lexem(ConstantLexem((int)i, true), pos);
+          }
         }
 
         for (size_t i = 0; i < functions.size(); ++i)

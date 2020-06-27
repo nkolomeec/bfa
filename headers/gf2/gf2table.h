@@ -18,6 +18,8 @@ namespace bf
   
     virtual bool isField();
 
+    virtual bv32 generator() const;
+
   public:
 
   protected:

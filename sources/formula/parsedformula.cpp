@@ -48,7 +48,15 @@ namespace lexem
 
         if (result.lexems[i].isConstant())
         {
-          result.lexems[i].constant.isRational = true;
+          if (!result.lexems[i].constant.special())
+          {
+            result.lexems[i].constant.isRational = true;
+          }
+          else
+          {
+            result.createError(lexem, "special constant in rational expression");
+            return false;
+          }
         }
 
         if (result.lexems[i].isVariable())
@@ -150,14 +158,14 @@ namespace lexem
     return true;
   }
   
-  ParsedFormula ParseFormula(std::istream &stream, const std::vector<std::string> &functions, char delimiter)
+  ParsedFormula ParseFormula(std::istream &stream, const std::vector<std::string> &functions, const std::vector<std::string>& constants, char delimiter)
   {
     ParsedFormula result;
     std::stack<Lexem> stack;
     bf::bv64 nOperands = 0;
 
     Lexem previousLexem;
-    Lexem lexem = NextLexem(stream, previousLexem, functions);
+    Lexem lexem = NextLexem(stream, previousLexem, functions, constants);
 
     while (lexem.isOk())
     {
@@ -171,7 +179,7 @@ namespace lexem
         {
           if (lexem.operation.type == OperationLexem::Type::Plus)
           {
-            lexem = NextLexem(stream, previousLexem, functions);
+            lexem = NextLexem(stream, previousLexem, functions, constants);
             continue;
           }
 
@@ -195,7 +203,7 @@ namespace lexem
       }
       
       previousLexem = lexem;
-      lexem = NextLexem(stream, previousLexem, functions);
+      lexem = NextLexem(stream, previousLexem, functions, constants);
     }
 
     if (lexem.isError() && lexem.error.symbol != delimiter)

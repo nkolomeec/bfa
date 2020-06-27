@@ -457,7 +457,7 @@ int main()
     8, false, false, false,
     { 1, 135, 1575, 957, 28, 0, 0, 0, 0 }));
 
-  CHECK(CheckPolynomialBent("@tr(2 x**57) @ 1033",
+  CHECK(CheckPolynomialBent("@tr(@gen x**57) @ 1033",
     10, true, true, false,
     { 1024, 523776, 22260480, 49395840, 1257368, 9, 0, 0, 0, 0, 0 }));
 

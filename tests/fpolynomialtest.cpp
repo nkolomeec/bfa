@@ -159,6 +159,14 @@ int main()
     "5 + (x + y)(y**30 x**31) @ 37",
     "5 + xy**30 + x**31y**31 @ 37"));
 
+  CHECK(CheckPolynomial(
+    "@gen x**1 + @  gen**-1 x**(0 + 2 * 1) @ 37",
+    "2x + 18x**2 @ 37"));
+
+  CHECK(CheckPolynomial(
+    "@gen xy + @gen x * @gen (x + y ) + @gen@gen * @gen**2 / @gen @ 37",
+    "8 + 4x**2 + 6xy @ 37"));
+
   std::cout << counter << " successful" << std::endl;
 
   return 0;

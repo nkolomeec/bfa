@@ -112,4 +112,9 @@ namespace bf
         }
       }
     }
+
+    bv32 GF2Table::generator() const
+    {
+      return _primary;
+    }
 }

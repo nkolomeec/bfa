@@ -1,5 +1,6 @@
 #include "gf2/gf2.h"
 #include "gf2/bpolynomials.h"
+#include "gf2/gf2factory.h"
 #include "linear/linear.h"
 
 #include <vector>
@@ -62,5 +63,12 @@ namespace bf
     bool GF2::check() const
     {
       return bpolynomials::isIrreducible(Polynomial);
+    }
+
+    bv32 GF2::generator() const
+    {
+      auto mapped = GF2Factory::createMapped(Polynomial, false);
+     
+      return mapped != nullptr ? mapped->generator() : 0;
     }
 }
