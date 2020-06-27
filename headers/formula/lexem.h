@@ -266,64 +266,69 @@ namespace lexem
       :
       type(Type::None),
       error('\0'),
+      constant(BV64(0)),
+      variable('\0'),
+      bracket(),
+      operation(0),
+      special(0),
       position(pos)
     {
     }
 
     Lexem(OperationLexem::Type op, int64_t pos)
       :
-      position(pos),
-      type(Type::Operation)
+      Lexem(pos)
     {
       operation = OperationLexem(op);
+      type = Type::Operation;
     }
  
     Lexem(const OperationLexem &o, int64_t pos)
       :
-      position(pos),
-      type(Type::Operation)
+      Lexem(pos)
     {
       operation = o;
+      type = Type::Operation;
     }
 
     Lexem(const ConstantLexem &c, int64_t pos)
       :
-      position(pos),
-      type(Type::Constant)
+      Lexem(pos)
     {
       constant = c;
+      type = Type::Constant;
     }
 
     Lexem(const VariableLexem &v, int64_t pos)
       :
-      position(pos),
-      type(Type::Variable)
+      Lexem(pos)
     {
       variable = v;
+      type = Type::Variable;
     }
 
     Lexem(const BracketLexem &b, int64_t pos)
       :
-      position(pos),
-      type(Type::Bracket)
+      Lexem(pos)
     {
       bracket = b;
+      type = Type::Bracket;
     }
 
     Lexem(const ErrorLexem &e, int64_t pos)
       :
-      position(pos),
-      type(Type::Error)
+      Lexem(pos)
     {
       error = e;
+      type = Type::Error;
     }
 
     Lexem(const SpecialLexem &s, int64_t pos)
       :
-      position(pos),
-      type(Type::Special)
+      Lexem(pos)
     {
       special = s;
+      type = Type::Special;
     }
 
     bool isOk() const
