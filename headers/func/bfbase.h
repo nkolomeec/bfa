@@ -8,10 +8,6 @@ namespace bf
   class BFBase
   {
   protected:
-    ChunkVector _values;
-    bv8 _n;
-
-  protected:
     void resize(int n, bool copy);
 
     // constructors
@@ -75,7 +71,17 @@ namespace bf
       _values[0] &= (bv64)((static_cast<bv64>(_n < 6) << (basis64(_n) & BV64(63))) - 1);
     }
 
+    inline void swap(BFBase& f)
+    {
+      _values.swap(f._values);
+      std::swap(_n, f._n);
+    }
+
   public:
     BFBase MobiusTransform() const;
+
+  protected:
+    ChunkVector _values;
+    bv8 _n;
   };
 }

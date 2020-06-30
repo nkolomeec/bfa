@@ -18,7 +18,7 @@ namespace bf
     MultiplyHn(_walsh, _n);
   }
 
-  bool WalshSpectrum::function(BF &f)
+  bool WalshSpectrum::function(BF &f) const
   {
     BF func(_n);
     auto values(_walsh);
@@ -37,9 +37,22 @@ namespace bf
       func.set(x, values[x] < 0);
     }
 
-    f = func;
+    f.swap(func);
 
     return true;
+  }
+
+  void WalshSpectrum::sign(BF& f, bool valueOnZero) const
+  {
+    BF func(_n);
+
+    for (auto x : func.dom())
+    {
+      auto c = _walsh[x];
+      func.set(x, (c < 0) ^ (valueOnZero && c == 0));
+    }
+
+    f.swap(func);
   }
 
   std::vector<int64_t> WalshSpectrum::correlation(const WalshSpectrum &wg) const

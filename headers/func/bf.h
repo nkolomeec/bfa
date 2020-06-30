@@ -93,6 +93,11 @@ namespace bf
     {
       return (weight() << 1) == bf::basis64(n());
     }
+
+    inline void swap(BF& f)
+    {
+      BFBase::swap(f);
+    }
   };
 
   std::ostream& operator<<(std::ostream &stream, const BF &bf);

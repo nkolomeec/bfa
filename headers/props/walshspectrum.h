@@ -22,8 +22,10 @@ namespace bf
 
     explicit WalshSpectrum(const BF &f);
 
-    bool function(BF &f);
+    bool function(BF &f) const;
 
+    void sign(BF &f, bool valueOnZero = false) const;
+ 
     std::vector<int64_t> correlation(const WalshSpectrum &wg) const;
 
     std::vector<int64_t> autocorrelation() const;
