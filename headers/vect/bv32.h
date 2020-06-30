@@ -160,4 +160,9 @@ namespace bf
   {
     return !zero(vect) && zero(vect & (vect - 1));
   }
+
+  inline bv64 leastOne(bv32 vect)
+  {
+    return vect & (bv32)(-(int32_t)vect);
+  }
 }

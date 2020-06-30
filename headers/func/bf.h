@@ -35,7 +35,12 @@ namespace bf
 
     BF(const Anf&);
     
-    BF& operator+=(const BF &f)
+    BF& operator+=(const BF& f)
+    {
+      return *this ^= f;
+    }
+    
+    BF& operator^=(const BF &f)
     {
       assert(_n == f._n);
 
@@ -44,7 +49,12 @@ namespace bf
       return *this;
     }
 
-    BF& operator*=(const BF &f)
+    BF& operator*=(const BF& f)
+    {
+      return *this &= f;
+    }
+    
+    BF& operator&=(const BF &f)
     {
       assert(_n == f._n);
 
@@ -98,6 +108,43 @@ namespace bf
     {
       BFBase::swap(f);
     }
+  
+  public:
+    bool affine(bv32 &coeff, bool &c) const;
+
+    inline bool affine() const
+    {
+      bv32 coeff;
+      bool c;
+      return affine(coeff, c);
+    }
+
+    inline bool linear(bv32 &coeff) const
+    {
+      if (get(0))
+      {
+        return false;
+      }
+
+      bool c;
+      return affine(coeff, c);
+    }
+
+    inline bool linear() const
+    {
+      bv32 coeff;
+      return linear(coeff);
+    }
+
+  public:
+    BF subfunction(const bv32* basis, unsigned int count, bv32 coset = BV32(0)) const;
+
+    inline BF subfunction(std::vector<bv32> basis, bv32 coset = BV32(0)) const
+    {
+      return subfunction(basis.data(), (unsigned int)basis.size(), coset);
+    }
+
+    BF subfunction(bv32 coordinates, bv32 coset = BV32(0)) const;
   };
 
   std::ostream& operator<<(std::ostream &stream, const BF &bf);
