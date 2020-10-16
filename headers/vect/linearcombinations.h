@@ -9,6 +9,12 @@ namespace bf
   class LinearCombinations
   {
   public:
+    inline LinearCombinations(const T& coset, std::vector<T> basis, bool skipZero = false) :
+      LinearCombinations(coset, basis.data(), basis.size(), skipZero)
+    {
+
+    }
+
     inline LinearCombinations(const T& coset, const T *basis, int n, bool skipZero = false):
       _max(max64(n)),
       _state(coset),
